@@ -1,4 +1,4 @@
-*.out
-main
-main.c
-chessviz1
+*.a
+*.d
+*.o
+bin/chessviz

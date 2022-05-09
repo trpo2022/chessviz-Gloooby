@@ -1,7 +1,0 @@
-all: chessviz1
-main: chessviz.c
-	gcc -Wall -Werror -o chessviz1 chessviz.c -lm
-clean:
-	rm chessviz1
-run:
-	./chessviz1
