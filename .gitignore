@@ -1,4 +1,5 @@
 *.a
 *.d
 *.o
-bin/
+bin/test
+bin/chessviz
