@@ -1,5 +1,4 @@
 #include <libchessviz/chessviz.h>
-//#include "chessviz.h"
 
 int readNumber(char a)
 {
@@ -125,7 +124,7 @@ void printBoard(char chessviz[8][8])
     }
     printf("\n");
 }
-void dvig(char chessviz[8][8], int ternTipe, int x1, int y1, int x2, int y2)
+int dvig(char chessviz[8][8], int ternTipe, int x1, int y1, int x2, int y2)
 {
     if ((chessviz[y2][x2] == ' ' && ternTipe == 1)
         || (chessviz[y2][x2] != ' ' && ternTipe == 2)) {
@@ -138,15 +137,20 @@ void dvig(char chessviz[8][8], int ternTipe, int x1, int y1, int x2, int y2)
                 chessviz[y1][x1] = ' ';
             } else {
                 printf("Error - невозиожно взятие союзной фигуры\n");
-                return;
+                return 1;
             }
         }
         if (ternTipe == 1) {
             chessviz[y2][x2] = chessviz[y1][x1];
             chessviz[y1][x1] = ' ';
+            return 0;
         }
     } else
+    {
         printf("Error - конечная цель не соответствует типу хода\n");
+        return 2;
+    }
+    return 2;
 }
 
 int readInput(char str[20], char chessviz[8][8],int i)
