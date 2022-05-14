@@ -137,7 +137,7 @@ int dvig(char chessviz[8][8], int ternTipe, int x1, int y1, int x2, int y2)
                 chessviz[y1][x1] = ' ';
             } else {
                 printf("Error - невозиожно взятие союзной фигуры\n");
-                return 1;
+                return 13;
             }
         }
         if (ternTipe == 1) {
@@ -145,15 +145,14 @@ int dvig(char chessviz[8][8], int ternTipe, int x1, int y1, int x2, int y2)
             chessviz[y1][x1] = ' ';
             return 0;
         }
-    } else
-    {
+    } else {
         printf("Error - конечная цель не соответствует типу хода\n");
-        return 2;
+        return 12;
     }
     return 2;
 }
 
-int readInput(char str[20], char chessviz[8][8],int i)
+int readInput(char str[20], char chessviz[8][8], int i)
 {
     int fig, x1, y1, x2, y2;
     int ternTipe;
@@ -166,32 +165,32 @@ int readInput(char str[20], char chessviz[8][8],int i)
             fig = 6;
             i++;
         } else {
-            if (str[i] == 'q' && i==0) {
+            if (str[i] == 'q' && i == 0) {
                 printf("Выход\n");
                 return 1;
             }
-            printf("Error1\n");
-            return 0;
+            printf("Error2\n");
+            return 2;
         }
     } else {
         i++;
         x1 = readLetter(str[i]);
         if (x1 == -1) {
-            printf("Error2\n");
-            return 0;
+            printf("Error3\n");
+            return 3;
         }
         i++;
     }
     y1 = readNumber(str[i]);
     if (y1 == -1) {
-        printf("Error3\n");
-        return 0;
+        printf("Error4\n");
+        return 4;
     }
     i++;
 
     if (tolower(chessviz[y1][x1]) != tolower(getfig(fig))) {
         printf("Неправильный ввод, не указана фигура или указана не та\n");
-        return 0;
+        return 5;
     }
 
     switch (str[i]) {
@@ -204,8 +203,8 @@ int readInput(char str[20], char chessviz[8][8],int i)
         break;
     }
     default: {
-        printf("Error\n");
-        return 0;
+        printf("Error6\n");
+        return 6;
     }
     }
 
@@ -215,14 +214,14 @@ int readInput(char str[20], char chessviz[8][8],int i)
     if (x2 != -1) {
         i++;
     } else {
-        printf("Error4\n");
-        return 0;
+        printf("Error7\n");
+        return 7;
     }
 
     y2 = readNumber(str[i]);
     if (y2 == -1) {
-        printf("Error5\n");
-        return 0;
+        printf("Error8\n");
+        return 8;
     }
     i++;
     // printf("i-%d,  %ld\n",i, strlen(str));
@@ -238,22 +237,22 @@ int readInput(char str[20], char chessviz[8][8],int i)
         break;
     }
     }
-    
-    moveFig(chessviz, fig, ternTipe, x1, y1, x2, y2);
-    if (shaxMat == 1)
-    {
+    int ret = moveFig(chessviz, fig, ternTipe, x1, y1, x2, y2);
+    if (ret != 0)
+        return ret;
+
+    if (shaxMat == 1) {
         printf("Кто-то победил\n");
     }
-    
-    else
-    {
-    for (int j = i; j < (int)strlen(str); j++) {
-        if (str[j] != ' ') {
-            printf("Error6\n");
 
-            return 0;
+    else {
+        for (int j = i; j < (int)strlen(str); j++) {
+            if (str[j] != ' ') {
+                printf("Error9\n");
+
+                return 9;
+            }
         }
-    }
     }
     return 0;
 }
@@ -302,10 +301,12 @@ int moveFig(
     if (fig == 5) { // ---------Конь (N)----------
         if ((abs(x1 - x2) == 1 && abs(y1 - y2) == 2)
             || (abs(x1 - x2) == 2 && abs(y1 - y2) == 1)) {
-            dvig(chessviz, ternTipe, x1, y1, x2, y2);
+            int ret = dvig(chessviz, ternTipe, x1, y1, x2, y2);
+            if (ret != 0)
+                return ret;
         } else {
             printf("Error - фигура так не двигается\n");
-            return 0;
+            return 10;
         }
     }
 
@@ -321,13 +322,15 @@ int moveFig(
                 if (chessviz[y1 + yplus * j][x1 + xplus * j] != ' ') {
                     printf("Error - слон не иожет двигаться по клеткам с "
                            "фигурами\n");
-                    return 0;
+                    return 11;
                 }
             }
-            dvig(chessviz, ternTipe, x1, y1, x2, y2);
+            int ret = dvig(chessviz, ternTipe, x1, y1, x2, y2);
+            if (ret != 0)
+                return ret;
         } else {
             printf("Error - фигура так не двигается\n");
-            return 0;
+            return 10;
         }
     }
 
@@ -348,10 +351,15 @@ int moveFig(
                 if (chessviz[y1 + yplus * j][x1 + xplus * j] != ' ') {
                     printf("Error - Ладья не иожет двигаться по клеткам с "
                            "фигурами\n");
-                    return 0;
+                    return 11;
                 }
             }
-            dvig(chessviz, ternTipe, x1, y1, x2, y2);
+            int ret = dvig(chessviz, ternTipe, x1, y1, x2, y2);
+            if (ret != 0)
+                return ret;
+        } else {
+            printf("Error - фигура так не двигается\n");
+            return 10;
         }
     }
 
@@ -378,16 +386,26 @@ int moveFig(
                 if (chessviz[y1 + yplus * j][x1 + xplus * j] != ' ') {
                     printf("Error - Ферзь не иожет двигаться по клеткам с "
                            "фигурами\n");
-                    return 0;
+                    return 11;
                 }
             }
-            dvig(chessviz, ternTipe, x1, y1, x2, y2);
+            int ret = dvig(chessviz, ternTipe, x1, y1, x2, y2);
+            if (ret != 0)
+                return ret;
+        } else {
+            printf("Error - фигура так не двигается\n");
+            return 10;
         }
     }
 
     if (fig == 1) { // ---------Король (K)----------
         if (abs(x1 - x2) <= 1 && abs(y2 - y1) <= 1) {
-            dvig(chessviz, ternTipe, x1, y1, x2, y2);
+            int ret = dvig(chessviz, ternTipe, x1, y1, x2, y2);
+            if (ret != 0)
+                return ret;
+        } else {
+            printf("Error - фигура так не двигается\n");
+            return 10;
         }
     }
     return 0;

@@ -17,7 +17,7 @@ int main()
         char str[20];
         scanf("%s", str);
         int ret = readInput(str, chessviz, 0);
-        if (ret != 0) {
+        if (ret == 0) {
             return 0;
         }
     }
