@@ -17,3 +17,5 @@ jobs:
 
       - name: Test application
         run: make test   
+      - name: Test application
+        run: ./bin/test
