@@ -38,35 +38,35 @@ CTEST(chessviz, readInput1)
 CTEST(chessviz, readInput2)
 {
     char chessviz[8][8];
-    fillBoard(chessviz);   
+    fillBoard(chessviz);
     char str[20] = "qe2-e4";
     ASSERT_EQUAL(1, readInput(str, chessviz, 0));
 }
 CTEST(chessviz, readInput3)
 {
     char chessviz[8][8];
-    fillBoard(chessviz);   
+    fillBoard(chessviz);
     char str[20] = "ze2-e4";
     ASSERT_EQUAL(2, readInput(str, chessviz, 0));
 }
 CTEST(chessviz, readInput4)
 {
     char chessviz[8][8];
-    fillBoard(chessviz);   
+    fillBoard(chessviz);
     char str[20] = "Ke2-e4";
     ASSERT_EQUAL(5, readInput(str, chessviz, 0));
 }
 CTEST(chessviz, readInput5)
 {
     char chessviz[8][8];
-    fillBoard(chessviz);   
+    fillBoard(chessviz);
     char str[20] = "ey-e4";
     ASSERT_EQUAL(4, readInput(str, chessviz, 0));
 }
 CTEST(chessviz, readInput6)
 {
     char chessviz[8][8];
-    fillBoard(chessviz);   
+    fillBoard(chessviz);
     char str[20] = "e2e4";
     ASSERT_EQUAL(6, readInput(str, chessviz, 0));
 }
